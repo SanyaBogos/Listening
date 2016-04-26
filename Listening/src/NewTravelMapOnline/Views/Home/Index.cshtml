@@ -1,0 +1,40 @@
+﻿@using System.Security.Claims
+@{
+    ViewData["Title"] = "Home Page";
+    var Role = User.IsInRole("admin") ? "a" : "";
+}
+
+<div ui-view></div>
+
+@section scripts{
+
+    <script type="text/javascript">
+        var userContext = {
+            userName: '@User.GetUserName()' || '',
+            role: '@Role' || ''
+        };
+    </script>
+    <script src="~/lib/underscore/underscore-min.js"></script>
+    <script src="~/lib/angular/angular.js"></script>
+    @*<script src="~/js/angular/templateCache.js"></script>*@
+    <script src="~/lib/angular-route/angular-route.js"></script>
+    <script src="~/lib/angular-resource/angular-resource.js"></script>
+    <script src="~/lib/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="~/lib/angular-animate/angular-animate.js"></script>
+    <script src="~/lib/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="~/lib/ng-focus-if/focusIf.min.js"></script>
+    <script src="~/lib/ng-file-upload/ng-file-upload-shim.min.js"></script>
+    <script src="~/lib/ng-file-upload/ng-file-upload.min.js"></script>
+    <script src="~/lib/objectid.js/src/main/javascript/Objectid.js"></script>
+    <script src="~/lib/angular-busy/dist/angular-busy.min.js"></script>
+    <script src="~/lib/angular-aria/angular-aria.min.js"></script>
+    <script src="~/lib/angular-material/angular-material.min.js"></script>
+    <script src="~/js/angular/app.js"></script>
+}
+
+@section styles{
+    <link href="~/lib/angular-busy/dist/angular-busy.min.css" rel="stylesheet" />
+    @*<link href="~/lib/angular-material/angular-material.min.css" rel="stylesheet" />*@
+
+    <link href="~/css/appStyleSheet.css" rel="stylesheet" />
+}

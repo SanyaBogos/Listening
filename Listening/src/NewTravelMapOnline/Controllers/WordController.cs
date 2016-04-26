@@ -1,0 +1,138 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Net;
+using System.Threading.Tasks;
+using Microsoft.AspNet.Authorization;
+using Microsoft.AspNet.Cors;
+using Microsoft.AspNet.Mvc;
+using MongoDB.Bson;
+using WebListening.Models;
+using WebListening.Repositories;
+using WebListening.Services;
+
+namespace WebListening.Controllers
+{
+    //[EnableCors("AllowAll")]
+    [Authorize]
+    [Route("api/[controller]")]
+    public class WordController : Controller
+    {
+        private readonly TextService _textService;
+        private readonly IRepository<Text> _textRepository;
+
+        public WordController(IRepository<Text> repository, TextService textService)
+        {
+            _textRepository = repository;
+            _textService = textService;
+        }
+
+        //public WordController(TextService textService)
+        //{
+        //    _textService = textService;
+        //}
+
+        [HttpGet("wordsInParagraphs/{id}")]
+        public JsonResult GetWordsInParagraphs(string id)
+        {
+            return Json(_textRepository.GetById(id));
+            //return Json(_textService.GetTextById(id));
+        }
+
+        [AllowAnonymous]
+        [HttpGet("{id}")]
+        public JsonResult GetWordsCountInParagraphs(string id)
+        {
+            try
+            {
+                var wordsInParagraphs = _textRepository.GetById(id).WordsInParagraphs;
+                var wordsCounts = _textService.GetWordCounts(wordsInParagraphs);
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(wordsCounts);
+
+                //Response.StatusCode = (int)HttpStatusCode.OK;
+                //var wordsInParagraphs = _textService.GetTextById(id).WordsInParagraphs;
+                //var wordsCounts = _textService.GetWordCounts(wordsInParagraphs);
+                //return Json(wordsCounts);
+            }
+            catch (Exception ex)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Invalid operation");
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("letter/{id}/{paragraphIndex}/{wordIndex}/{symbolIndex}")]
+        public JsonResult GetLetter(string id, int paragraphIndex, int wordIndex, int symbolIndex)
+        {
+            try
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(_textRepository.GetById(id)
+                                .WordsInParagraphs[paragraphIndex]
+                                [wordIndex][symbolIndex]);
+
+                //var letterLocator = new LetterLocatorDto
+                //{
+                //    TextId = id,
+                //    ParagraphIndex = paragraphIndex,
+                //    WordIndex = wordIndex,
+                //    LetterIndex = symbolIndex
+                //};
+
+                //var letter = _textService.GetLetter(letterLocator);
+                //return Json(letter);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Invalid operation");
+            }
+        }
+
+        [AllowAnonymous]
+        [HttpGet("wordCorrectness/{id}/{paragraphIndex}/{wordIndex}/{value}")]
+        public JsonResult GetWordCorrectness(string id, int paragraphIndex, int wordIndex, string value)
+        {
+            try
+            {
+                Response.StatusCode = (int)HttpStatusCode.OK;
+                return Json(value.Equals(_textRepository.GetById(id)
+                            .WordsInParagraphs[paragraphIndex][wordIndex]));
+                //var wordLocator = new WordLocatorDto
+                //{
+                //    TextId = id,
+                //    ParagraphIndex = paragraphIndex,
+                //    WordIndex = wordIndex
+                //};
+                //var isCorrect = _textService.CheckWordCorrectness(wordLocator, value);
+                //return Json(isCorrect);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Invalid operation");
+            }
+        }
+
+        //private List<string[]> GetWordCounts(string[][] wordsInParagraphs)
+        //{
+        //    var specialSymbols = new string[] { ",", ".", "?", ":" };
+        //    var wordsCounts = new List<string[]>();
+
+        //    foreach (var hiddenWordsInParagraphs in wordsInParagraphs)
+        //    {
+        //        var hiddenWordsLengthInText = new List<string>();
+        //        foreach (var word in hiddenWordsInParagraphs)
+        //            if (specialSymbols.Contains(word))
+        //                hiddenWordsLengthInText.Add(word);
+        //            else
+        //                hiddenWordsLengthInText.Add(word.Length.ToString());
+        //        wordsCounts.Add(hiddenWordsLengthInText.ToArray());
+        //    }
+
+        //    return wordsCounts;
+        //}
+    }
+}

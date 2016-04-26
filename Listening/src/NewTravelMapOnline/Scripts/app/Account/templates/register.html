@@ -1,0 +1,38 @@
+﻿<h2>Register.</h2>
+<form class="form-horizontal" role="form" name="registerAccountForm" ng-submit="registryClick()">
+    <h4>Create a new account.</h4>
+    <hr>
+    <div class="text-danger validation-summary-valid">
+        <ul ng-show="errorsFromServer.length > 0">
+            <li ng-repeat="error in errorsFromServer">{{error}}</li>
+        </ul>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Email</label>
+        <div class="col-md-10">
+            <input class="form-control" type="text" ng-model="user.email" required>
+            <span class="text-danger field-validation-valid" ng-show="emailCheck()">{{emailCheck()}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Password</label>
+        <div class="col-md-10">
+            <input class="form-control" type="password" ng-model="user.password" required ng-minlength="6">
+            <span class="text-danger field-validation-valid" ng-show="passwordCheck()">{{passwordCheck()}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <label class="col-md-2 control-label">Confirm password</label>
+        <div class="col-md-10">
+            <input class="form-control" type="password" ng-model="user.confirmPassword" required ng-minlength="6">
+            <span class="text-danger field-validation-valid" ng-show="confirmPasswordCheck()">{{confirmPasswordCheck()}}</span>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <button class="btn btn-default" type="submit" ng-disabled="registerAccountForm.$invalid">Register</button>
+            <!--<button class="btn btn-default" type="submit" >Register</button>-->
+        </div>
+    </div>
+    <!--<input name="__RequestVerificationToken" type="hidden" value="CfDJ8Egi8i0PlX5KkYekKPnFqaz49e6jv2G06Gq09AULnygtPHVYq2A7js3eNfl9Cr4AqGknWORKhgoSq7Vg0_e4J0aylgz6O933HgLnsx-rsfPNs04n6-RtfHHx55w0ndn713pCAJE1QNRHbpHO8ut3PRg">-->
+</form>

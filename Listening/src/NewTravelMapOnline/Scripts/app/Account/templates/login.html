@@ -1,0 +1,45 @@
+﻿<section>
+    <form class="form-horizontal">
+        <h4>Use a local account to log in.</h4>
+        <hr>
+        <div class="text-danger validation-summary-valid">
+            <ul ng-show="errorsFromServer.length > 0">
+                <li ng-repeat="error in errorsFromServer">{{error}}</li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Email</label>
+            <div class="col-md-10">
+                <input class="form-control" ng-model="user.email" />
+                <!--<span class="text-danger field-validation-valid" ></span>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Password</label>
+            <div class="col-md-10">
+                <input class="form-control" type="password" ng-model="user.password"/>
+                <!--<span class="text-danger field-validation-valid" ></span>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <div class="checkbox">
+                    <input type="checkbox" ng-model="user.rememberMe">
+                    <label>Remember me?</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <button class="btn btn-default" ng-click="login()">Log in</button>
+            </div>
+        </div>
+        <p>
+            <a ui-sref="register">Register as a new user?</a>
+        </p>
+        <p>
+            <a href="/Account/ForgotPassword">Forgot your password?</a>
+        </p>
+        <!--<input name="__RequestVerificationToken" type="hidden" value="CfDJ8Egi8i0PlX5KkYekKPnFqayCa4JLhtvJ4SNlFUvOk70lbnfIp-iDFX-I49D9xHQQh50Kf9BP-XqJ79HqxWtcNldI60xkDqs_bED9dJqtiGlq9IeC9uTh5FcLEuKHQcWF9GiuoM51P_m7-Mw1wiJgg68">--><input name="RememberMe" type="hidden" value="false">
+    </form>
+</section>

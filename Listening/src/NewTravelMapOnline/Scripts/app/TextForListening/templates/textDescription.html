@@ -1,0 +1,17 @@
+﻿<div class="navbar navbar-fixed-top navbar-offset shift-from-top">
+    <div class="col-md-offset-3 col-md-6">
+        <h2 class="text-center">{{description.title}}</h2>
+        <h4 class="text-center">{{description.subTitle}}</h4>
+        <!--<label class="alert-danger" ng-show="errorMessage">{{errorMessage}}</label>-->
+
+        <audio class="center-audio" controls="controls" ng-controller="EmbedCtrl">
+            <source embed-src="{{description.audio}}" type="audio/mp3" />
+        </audio>
+    </div>
+
+    <div class="col-md-1 margin-10">
+        <a class="btn btn-small btn-info" ng-click="showAlert($event)">
+            <i class="glyphicon glyphicon-info-sign"></i> Info
+        </a>
+    </div>
+</div>

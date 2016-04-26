@@ -1,0 +1,21 @@
+﻿<!--<div class="navbar navbar-fixed-top navbar-offset" style="margin-top: 51px; background-color:white;">
+    <h2 class="text-center">{{title}}</h2>
+    <h4 class="text-center">{{subTitle}}</h4>
+    <label class="alert-danger" ng-show="errorMessage">{{errorMessage}}</label>
+
+    <audio class="center-audio" controls="controls" ng-controller="EmbedCtrl">
+        <source embed-src="{{audio}}" type="audio/mp3" />
+    </audio>
+</div>-->
+<text-description description="{title: title, subTitle: subTitle, audio: audio}"></text-description>
+
+<div style="margin-top:135px" cg-busy="myPromise">
+    <hr />
+    <div style="margin-bottom: 50px" ng-repeat="hiddenWordsArray in hiddenWordsArrayInParagraphs track by $index">
+        <word class="word" ng-repeat="n in hiddenWordsArray track by $index"
+              letter-count-obj="n"
+              locator="{ wordIndex: $index, paragraphIndex: $parent.$index, textId: currentTextId}"
+              check-word-index="checkWordIndex(index)"></word>
+    </div>
+    <!--<input type="text" value="barada" uib-tooltip="See? Now click away..." tooltip-trigger="focus" tooltip-placement="right"/>-->
+</div>

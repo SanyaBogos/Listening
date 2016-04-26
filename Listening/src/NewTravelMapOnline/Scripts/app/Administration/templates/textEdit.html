@@ -1,0 +1,64 @@
+﻿<section>
+    <form class="form-horizontal" name="form">
+        <h4 class="text-center">Use to change existing texts.</h4>
+        <hr>
+        <div class="text-danger validation-summary-valid">
+            <ul ng-show="errorsFromServer.length > 0">
+                <li ng-repeat="error in errorsFromServer">{{error}}</li>
+            </ul>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Title</label>
+            <div class="col-md-10">
+                <input class="form-control full-max-width" ng-model="textDto.title" />
+                <!--<span class="text-danger field-validation-valid" ></span>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Subtitle</label>
+            <div class="col-md-10">
+                <input class="form-control full-max-width" ng-model="textDto.subTitle" />
+                <!--<span class="text-danger field-validation-valid" ></span>-->
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-md-2 control-label">Audio file name</label>
+            <div class="col-md-10">
+                <input class="form-control full-max-width" ng-model="textDto.audioName" disabled/>
+                <!--<span class="text-danger field-validation-valid" ></span>-->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Audio file</label>
+            <div class="col-md-4">
+                <div class="btn btn-default" ngf-select ng-model="file" name="file" ngf-pattern="'audio/*'"
+                     ngf-accept="'audio/*'" ngf-max-size="20MB" ngf-min-height="100"
+                     ngf-resize="{width: 100, height: 100}">Select file</div>
+            </div>
+            <div class="col-md-6">
+                <audio controls ngf-src="file"></audio>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="col-md-2 control-label">Text</label>
+            <div class="col-md-10">
+                <textarea rows="8" class="form-control full-max-width" ng-model="textDto.text" />
+                <!--<span class="text-danger field-validation-valid" ></span>-->
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-12 text-center">
+                <button class="btn btn-default" ng-click="save()">Save</button>
+                <button class="btn btn-danger" ng-click="remove()" ng-disabled="isNewElement">Delete</button>
+            </div>
+        </div>
+
+        <div class="text-success validation-summary-valid">
+            <label class="col-md-offset-4 control-label text-center" ng-show="successMessage.length > 0">{{successMessage}}</label>
+        </div>
+
+    </form>
+</section>

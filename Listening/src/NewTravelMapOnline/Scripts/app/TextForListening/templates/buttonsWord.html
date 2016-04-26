@@ -1,0 +1,8 @@
+﻿<button class="btn"
+        
+        ng-repeat="letter in letters track by $index"
+        ng-click="!letterCountObj.isGuessed && setWordIndex()"
+        ng-dblclick="getCorrectLetter(letter.id, $event)"
+        ng-class="letter.class">
+    {{letter.id}}
+</button>
