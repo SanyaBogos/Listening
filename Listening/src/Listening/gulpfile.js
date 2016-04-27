@@ -1,4 +1,4 @@
-﻿/// <binding />
+﻿/// <binding AfterBuild='angularCompile' />
 "use strict";
 
 var gulp = require("gulp"),
@@ -103,11 +103,11 @@ gulp.task("less", function () {
 
 });
 
-gulp.task("angularCopy", ["copy:angularHtml", "angular-templatecache", "angularConcat", "less"]);
+gulp.task("angularCompile", ["copy:angularHtml", "angular-templatecache", "angularConcat", "less"]);
 
 //gulp.task("angular-rebuild", ["clean:angular", "angularCopy"]);
 
 gulp.task("watcher", function () {
     //gulp.watch(paths.angularJsSrc, ["angularCopy"]);
-    gulp.watch([paths.angularJsSrc, paths.angularHtmlSrc, paths.lessSrc], ["angularCopy"]);
+    gulp.watch([paths.angularJsSrc, paths.angularHtmlSrc, paths.lessSrc], ["angularCompile"]);
 });
