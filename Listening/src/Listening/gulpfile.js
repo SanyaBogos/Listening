@@ -5,6 +5,7 @@ var gulp = require("gulp"),
     rimraf = require("rimraf"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
+    rename = require("gulp-rename"),
     uglify = require("gulp-uglify");
 
 var templateCache = require('gulp-angular-templatecache');
@@ -16,12 +17,13 @@ var less = require('gulp-less');
 var minifyCSS = require('gulp-minify-css');
 
 var paths = {
-    webroot: "./wwwroot/"
+    webroot: "./wwwroot/",
+    style: './Styles/'
 };
 
 paths.js = paths.webroot + "js/**/*.js";
 paths.minJs = paths.webroot + "js/**/*.min.js";
-paths.css = paths.webroot + "css/**/*.css";
+paths.css = paths.style + "css/**/*.css";
 paths.minCss = paths.webroot + "css/**/*.min.css";
 paths.concatJsDest = paths.webroot + "js/site.min.js";
 paths.concatCssDest = paths.webroot + "css/site.min.css";
@@ -80,14 +82,6 @@ gulp.task('angular-templatecache', function () {
       .pipe(gulp.dest(paths.angularDest));
 });
 
-gulp.task('min:angular', function () {
-    return gulp.src(paths.angularJsSrc)
-        .pipe(ngAnnotate())
-        .pipe(concat('app.js'))
-		.pipe(ngmin({ dynamic: true }))
-		.pipe(gulp.dest(paths.angularDest));
-});
-
 gulp.task("angularConcat", function () {
     return gulp.src([paths.angularJsSrc, paths.angularDest])
         .pipe(ngAnnotate())
@@ -95,15 +89,22 @@ gulp.task("angularConcat", function () {
         .pipe(gulp.dest(paths.angularDest));
 });
 
+gulp.task('min:angular', ['angularConcat'], function () {
+    return gulp.src(paths.angularDest + 'app.js')
+		.pipe(ngmin())
+        .pipe(uglify({ mangle: false }))
+        .pipe(rename({ suffix: '.min' }))
+		.pipe(gulp.dest(paths.angularDest));
+});
+
 gulp.task("less", function () {
     return gulp.src(paths.lessSrc)
         .pipe(less())
         .pipe(minifyCSS())
         .pipe(gulp.dest(paths.lessDst));
-
 });
 
-gulp.task("angularCompile", ["copy:angularHtml", "angular-templatecache", "angularConcat", "less"]);
+gulp.task("angularCompile", ["copy:angularHtml", "angular-templatecache",/* "angularConcat",*/ "min:angular", "less"]);
 
 //gulp.task("angular-rebuild", ["clean:angular", "angularCopy"]);
 
