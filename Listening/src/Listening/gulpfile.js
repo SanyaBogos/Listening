@@ -1,4 +1,4 @@
-﻿/// <binding AfterBuild='angularCompile' />
+/// <binding AfterBuild='angularCompile' />
 "use strict";
 
 var gulp = require("gulp"),

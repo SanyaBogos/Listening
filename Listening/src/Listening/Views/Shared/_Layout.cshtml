@@ -5,18 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - English Listening</title>
 
-    <environment names="Development,Staging,Production">
+    <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
         @RenderSection("styles", required: false)
     </environment>
-    @*
+
     <environment names="Staging,Production">
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
         <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
-    </environment>*@
+        @RenderSection("styles", required: false)
+    </environment>
 </head>
 <body ng-app="app" ng-controller="CatchKeyCtrl" ng-keydown="catchKeysDown($event)" ng-keyup="clean($event)">
     <div class="navbar navbar-inverse navbar-fixed-top">
@@ -38,7 +39,6 @@
                     <li><a ui-sref="contacts">contact</a></li>
                 </ul>
                 @await Html.PartialAsync("_loginpartial")*@
-
 
                 <menu style="margin:0"></menu>
 
