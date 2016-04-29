@@ -16,11 +16,11 @@
                 AccountDataSvc.logout().then(self.successLogout);
             };
         })
-        .directive('menu', function () {
+        .directive('menu', function ($templateCache) {
             return {
                 scope: true,
                 restrict: 'E',
-                templateUrl: 'js/angular/app/MainMenu/templates/menu.html',
+                templateUrl: 'MainMenu/menu.html',
                 controller: 'MenuCtrl'
             };
         })

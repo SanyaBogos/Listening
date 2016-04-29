@@ -73,17 +73,6 @@ gulp.task("copy:angularJs", function () {
         .pipe(gulp.dest(paths.angularDest));
 });
 
-gulp.task("copy:angularHtml", function () {
-    return gulp.src([paths.angularHtmlSrc])
-        .pipe(gulp.dest('./' + paths.angularDest));
-});
-
-gulp.task('angular-templatecache', function () {
-    return gulp.src(paths.angularHtmlSrc)
-      .pipe(templateCache('templateCache.js', { module: 'templateCache', standalone: true, root: './templates/' }))
-      .pipe(gulp.dest(paths.angularDest));
-});
-
 gulp.task('templates', ['clean'], function () {
     return gulp.src('Scripts/app/**/*.html')
 		.pipe(htmlmin({
@@ -108,7 +97,7 @@ gulp.task('templates', ['clean'], function () {
 });
 
 
-gulp.task("angularConcat", function () {
+gulp.task("angularConcat", ['templates'], function () {
     return gulp.src([paths.angularJsSrc, paths.angularDest])
         .pipe(ngAnnotate())
         .pipe(concat('app.js'))
@@ -127,12 +116,11 @@ gulp.task("less", function () {
     return gulp.src(paths.lessSrc)
         .pipe(less())
         .pipe(minifyCSS())
+        .pipe(rename({ suffix: '.min' }))
         .pipe(gulp.dest(paths.lessDst));
 });
 
-gulp.task("angularCompile", ["copy:angularHtml", "angular-templatecache",/* "angularConcat",*/ "min:angular", "less"]);
-
-//gulp.task("angular-rebuild", ["clean:angular", "angularCopy"]);
+gulp.task("angularCompile", ["min:angular", "less", "min:css"]);
 
 gulp.task("watcher", function () {
     //gulp.watch(paths.angularJsSrc, ["angularCopy"]);

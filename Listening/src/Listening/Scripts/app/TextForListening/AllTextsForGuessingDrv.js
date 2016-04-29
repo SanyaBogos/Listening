@@ -16,11 +16,11 @@
             };
 
         })
-        .directive('allTextsForGuessing', function () {
+        .directive('allTextsForGuessing', function ($templateCache) {
             return {
                 restrict: 'E',
                 controller: 'AllTextsForGuessingCtrl',
-                templateUrl: 'js/angular/app/TextForListening/templates/AllTextsForGuessing.html'
+                templateUrl: 'TextForListening/allTextsForGuessing.html'
             };
         });
 })();

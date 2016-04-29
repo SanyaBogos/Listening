@@ -136,14 +136,14 @@
             self.addFunctions();
             self.addListeners();
         })
-        .directive('text', function () {
+        .directive('text', function ($templateCache) {
             return {
                 restrict: 'E',
                 controller: 'TextCtrl',
                 scope: {
                     textId: '='
                 },
-                templateUrl: 'js/angular/app/TextForListening/templates/text.html'
+                templateUrl: 'TextForListening/text.html'
             };
         });
 })();

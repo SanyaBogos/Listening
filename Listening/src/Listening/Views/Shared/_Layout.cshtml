@@ -7,7 +7,6 @@
 
     <environment names="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
-        <link rel="stylesheet" href="~/css/site.css" />
         @RenderSection("styles", required: false)
     </environment>
 
@@ -15,7 +14,6 @@
         <link rel="stylesheet" href="https://ajax.aspnetcdn.com/ajax/bootstrap/3.3.5/css/bootstrap.min.css"
               asp-fallback-href="~/lib/bootstrap/dist/css/bootstrap.min.css"
               asp-fallback-test-class="sr-only" asp-fallback-test-property="position" asp-fallback-test-value="absolute" />
-        <link rel="stylesheet" href="~/css/site.min.css" asp-append-version="true" />
         @RenderSection("styles", required: false)
     </environment>
 </head>
@@ -31,17 +29,8 @@
                 </button>
                 <a asp-controller="Home" asp-action="Index" class="navbar-brand">English Listening</a>
             </div>
-            <div class="navbar-collapse collapse">
-                @*<ul class="nav navbar-nav">
-
-                    <li><a ui-sref="home">home</a></li>
-                    <li><a ui-sref="about">about</a></li>
-                    <li><a ui-sref="contacts">contact</a></li>
-                </ul>
-                @await Html.PartialAsync("_loginpartial")*@
-
+            <div class="navbar-collapse collapse">                
                 <menu style="margin:0"></menu>
-
             </div>
         </div>
     </div>

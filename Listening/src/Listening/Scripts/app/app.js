@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-    
+
     angular.module('Account', ['ngResource', 'ui.router']);
     angular.module('Menu', ['Account', 'ui.router']);
     angular.module('AdditionFunctionality', []);
@@ -9,11 +9,9 @@
     angular.module('TextForListening', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngAnimate', 'focus-if', 'Common',
                                         'AdditionFunctionality', 'cgBusy', 'ngMaterial']);
 
-    angular.module('app', ['ngRoute', 'ui.router', 'Account', 'Menu', 'Common', 'Administration', 'TextForListening', 'templates'
-        /*, 'AdditionFunctionality'*/])
-        .config(function ($routeProvider, /*$stateProvider,*/ $locationProvider, $stateProvider, $urlRouterProvider) {
+    angular.module('app', ['ngRoute', 'ui.router', 'Account', 'Menu', 'Common', 'Administration', 'TextForListening', 'templates'])
+        .config(function ($routeProvider, $locationProvider, $stateProvider, $urlRouterProvider) {
 
-            //var pathRoot = 'js/angular/app/templates/';
             var pathAccount = 'Account/';
             var pathAdmin = 'Administration/';
             var pathTextForListening = 'TextForListening/';
@@ -48,11 +46,6 @@
                     templateProvider: provide(pathAccount + 'register.html')
 
                 })
-                //.state("allTextsDescription", {
-                //    url: '/allTextsDescription',
-                //    templateUrl: pathTextForListening + 'allTexts.html',
-                //    controller: 'AllTextsCtrl'
-                //})
                 .state("allTextsDescription", {
                     url: '/allTextsDescription',
                     templateProvider: provide(pathTextForListening + 'allTextsForGuessing.html'),
@@ -73,16 +66,12 @@
                     templateProvider: provide(pathAdmin + 'textEdit.html'),
                     controller: 'TextEditCtrl'
                 });
-            //.state("currentTextEdit", {
-            //    url: '/text/:textId/:title/:subTitle/:audio',
-            //    templateUrl: pathTextForListening + 'text.html',
-            //    controller: 'TextCtrl'
-            //});
 
             $urlRouterProvider.otherwise('/allTextsDescription');
         })
+
         .run(function ($rootScope) {
             $rootScope.userContext = userContext;
         });
-    
+
 })();

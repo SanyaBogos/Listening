@@ -29,14 +29,14 @@
 
             self.init();
         })
-        .directive('allTexts', function () {
+        .directive('allTexts', function ($templateCache) {
             return {
                 restrict: 'E',
                 controller: 'AllTextsCtrl',
                 scope: {
                     actionToDo: '&'
                 },
-                templateUrl: 'js/angular/app/TextForListening/templates/allTexts.html'
+                templateUrl: 'TextForListening/allTexts.html'
             };
         });
 })();

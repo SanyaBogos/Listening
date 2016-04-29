@@ -45,7 +45,7 @@
 
             $scope.buildLetterArray($scope.letterCountObj);
         })
-        .directive('buttonsWord', function () {
+        .directive('buttonsWord', function ($templateCache) {
             return {
                 restrict: 'E',
                 controller: 'ButtonsWordCtrl',
@@ -55,7 +55,7 @@
                     locator: '=',
                     letters: '='
                 },
-                templateUrl: 'js/angular/app/TextForListening/templates/buttonsWord.html'
+                templateUrl: 'TextForListening/buttonsWord.html'
             };
         });
 })();

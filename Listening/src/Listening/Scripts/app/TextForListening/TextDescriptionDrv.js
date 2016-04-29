@@ -26,14 +26,14 @@
             };
 
         })
-        .directive('textDescription', function () {
+        .directive('textDescription', function ($templateCache) {
             return {
                 restrict: 'E',
                 controller: 'TextDescriptionCtrl',
                 scope: {
                     description: '='
                 },
-                templateUrl: 'js/angular/app/TextForListening/templates/textDescription.html'
+                templateUrl: 'TextForListening/textDescription.html'
             };
         });
 })();

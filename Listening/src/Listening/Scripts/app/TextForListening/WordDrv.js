@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('TextForListening')
-        .controller('WordCtrl', function ($scope, /*$http,*/ $templateCache, $timeout, Word) {
+        .controller('WordCtrl', function ($scope, $timeout, Word) {
 
             var self = this;
 
@@ -14,7 +14,7 @@
                 $scope.inputClass = '';
                 $scope.word = '';
                 $scope.failedAttempts = [];
-                $templateCache.put('failedAttemptsTooltip.html', '<div ng-repeat="attempt in failedAttempts track by $index">{{attempt}}</div>');
+                //$templateCache.put('failedAttemptsTooltip.html', '<div ng-repeat="attempt in failedAttempts track by $index">{{attempt}}</div>');
 
                 self.successGuessed = function () {
                     $scope.letterCountObj.isGuessed = true;
@@ -121,7 +121,7 @@
             self.init();
         })
 
-        .directive('word', function () {
+        .directive('word', function ($templateCache) {
             return {
                 restrict: 'E',
                 controller: 'WordCtrl',
@@ -132,7 +132,7 @@
                     //setWordIndex: '&',
                     checkWordIndex: '&'
                 },
-                templateUrl: 'js/angular/app/TextForListening/templates/word.html'
+                templateUrl: 'TextForListening/word.html'
             };
         });
 })();
