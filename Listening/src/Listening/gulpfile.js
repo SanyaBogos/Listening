@@ -6,6 +6,8 @@ var gulp = require("gulp"),
     concat = require("gulp-concat"),
     cssmin = require("gulp-cssmin"),
     rename = require("gulp-rename"),
+    htmlmin = require("gulp-htmlmin"),
+    ngTemplates = require("gulp-ng-templates"),
     uglify = require("gulp-uglify");
 
 var templateCache = require('gulp-angular-templatecache');
@@ -81,6 +83,30 @@ gulp.task('angular-templatecache', function () {
       .pipe(templateCache('templateCache.js', { module: 'templateCache', standalone: true, root: './templates/' }))
       .pipe(gulp.dest(paths.angularDest));
 });
+
+gulp.task('templates', ['clean'], function () {
+    return gulp.src('Scripts/app/**/*.html')
+		.pipe(htmlmin({
+		    collapseBooleanAttributes: true,
+		    collapseWhitespace: true,
+		    removeAttributeQuotes: true,
+		    removeComments: true,
+		    removeEmptyAttributes: true,
+		    removeRedundantAttributes: true,
+		    removeScriptTypeAttributes: true,
+		    removeStyleLinkTypeAttributes: true
+		}))
+		.pipe(ngTemplates({
+		    filename: 'templates.js',
+		    module: 'templates',
+		    path: function (path, base) {
+		        return path.replace(base, '')
+		            .replace('templates', '');
+		    }
+		}))
+		.pipe(gulp.dest(paths.angularDest));
+});
+
 
 gulp.task("angularConcat", function () {
     return gulp.src([paths.angularJsSrc, paths.angularDest])

@@ -1,6 +1,6 @@
 ﻿(function () {
     'use strict';
-
+    
     angular.module('Account', ['ngResource', 'ui.router']);
     angular.module('Menu', ['Account', 'ui.router']);
     angular.module('AdditionFunctionality', []);
@@ -9,38 +9,44 @@
     angular.module('TextForListening', ['ui.router', 'ngResource', 'ui.bootstrap', 'ngAnimate', 'focus-if', 'Common',
                                         'AdditionFunctionality', 'cgBusy', 'ngMaterial']);
 
-
-    angular.module('app', ['ngRoute', 'ui.router', /*'templateCache', */'Account', 'Menu', 'Common', 'Administration', 'TextForListening'
+    angular.module('app', ['ngRoute', 'ui.router', 'Account', 'Menu', 'Common', 'Administration', 'TextForListening', 'templates'
         /*, 'AdditionFunctionality'*/])
         .config(function ($routeProvider, /*$stateProvider,*/ $locationProvider, $stateProvider, $urlRouterProvider) {
 
-            var pathRoot = 'js/angular/app/templates/';
-            var pathAccount = 'js/angular/app/Account/templates/';
-            var pathAdmin = 'js/angular/app/Administration/templates/';
-            var pathTextForListening = 'js/angular/app/TextForListening/templates/';
+            //var pathRoot = 'js/angular/app/templates/';
+            var pathAccount = 'Account/';
+            var pathAdmin = 'Administration/';
+            var pathTextForListening = 'TextForListening/';
+
+            var provide = function (path) {
+                return function ($templateCache) {
+                    return $templateCache.get(path);
+                }
+            };
 
             $stateProvider
                 .state('home', {
                     url: '/home',
-                    templateUrl: pathRoot + 'about.html'
+                    templateProvider: provide('/home.html')
                 })
                 .state('about', {
                     url: '/about',
-                    templateUrl: pathRoot + 'about.html'
+                    templateProvider: provide('/about.html')
                 })
                 .state('contacts', {
                     url: '/contacts',
-                    templateUrl: pathRoot + 'contacts.html'
+                    templateProvider: provide('/contacts.html')
                 })
                 .state('login', {
                     url: '/login',
                     controller: "LoginCtrl",
-                    templateUrl: pathAccount + 'login.html'
+                    templateProvider: provide(pathAccount + 'login.html')
                 })
                 .state('register', {
                     url: '/register',
                     controller: "RegisterCtrl",
-                    templateUrl: pathAccount + 'register.html'
+                    templateProvider: provide(pathAccount + 'register.html')
+
                 })
                 //.state("allTextsDescription", {
                 //    url: '/allTextsDescription',
@@ -49,22 +55,22 @@
                 //})
                 .state("allTextsDescription", {
                     url: '/allTextsDescription',
-                    templateUrl: pathTextForListening + 'allTextsForGuessing.html',
+                    templateProvider: provide(pathTextForListening + 'allTextsForGuessing.html'),
                     controller: 'AllTextsForGuessingCtrl'
                 })
                 .state("currentText", {
                     url: '/text/:textId/:title/:subTitle/:audio',
-                    templateUrl: pathTextForListening + 'text.html',
+                    templateProvider: provide(pathTextForListening + 'text.html'),
                     controller: 'TextCtrl'
                 })
                 .state('administration', {
                     url: '/administration',
-                    templateUrl: pathAdmin + 'allTextsForEditing.html',
+                    templateProvider: provide(pathAdmin + 'allTextsForEditing.html'),
                     controller: 'AllTextsForEditingCtrl'
                 })
                 .state('administrationEdit', {
                     url: '/administrationEdit/:textId',
-                    templateUrl: pathAdmin + 'textEdit.html',
+                    templateProvider: provide(pathAdmin + 'textEdit.html'),
                     controller: 'TextEditCtrl'
                 });
             //.state("currentTextEdit", {
@@ -78,4 +84,5 @@
         .run(function ($rootScope) {
             $rootScope.userContext = userContext;
         });
+    
 })();
