@@ -2,27 +2,18 @@
     'use strict';
 
     angular.module('TextForListening')
-        .controller('TextDescriptionCtrl', function ($scope, $mdDialog, $mdMedia) {
+        .controller('TextDescriptionCtrl', function ($scope, $uibModal, $templateCache) {
 
-            $scope.info = function () {
+            $scope.animationsEnabled = true;
 
-            };
-
-            $scope.customFullscreen = $mdMedia('xs') || $mdMedia('sm');
             $scope.showAlert = function (ev) {
-                // Appending dialog to document.body to cover sidenav in docs app
-                // Modal dialogs should fully cover application
-                // to prevent interaction outside of dialog
-                $mdDialog.show(
-                  $mdDialog.alert()
-                    .parent(angular.element(document.querySelector('#popupContainer')))
-                    .clickOutsideToClose(true)
-                    .title('This is an alert title')
-                    .textContent('You can specify some description text in here.')
-                    .ariaLabel('Alert Dialog Demo')
-                    .ok('Got it!')
-                    .targetEvent(ev)
-                );
+                var modalInstance = $uibModal.open({
+                    animation: $scope.animationsEnabled,
+                    template: $templateCache.get('TextForListening/info.html'),
+                    controller: 'InfoCtrl'
+                });
+
+                modalInstance.result.then();
             };
 
         })

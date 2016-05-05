@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('AdditionFunctionality')
-        .controller('CatchKeyCtrl', function ($scope) {
+        .controller('CatchKeyCtrl', function ($scope, $window) {
 
             var self = this;
 
@@ -24,14 +24,7 @@
                     { eventName: 'nextWord', keyCombination: self.keyConbination.tab },
                     { eventName: 'prevWord', keyCombination: self.keyConbination.shiftTab }
                 ];
-                //self.wordEventCombinationDictionary = [
-                //];
-                //self.otherEventCombinationDictionary = [
-                //    { keyCombination: self.keyConbination.enter },
-                //    { keyCombination: self.keyConbination.alt },
-                //];
-
-
+                                               
             };
 
             self.addFunctions = function () {
@@ -45,17 +38,6 @@
                             $scope.$broadcast(value.eventName);
                     });
 
-                    //angular.forEach(self.wordEventCombinationDictionary, function (value) {
-                    //    if (angular.equals(self.keysPressed, value.keyCombination)) {
-                    //        $scope.$broadcast(value.eventName);
-                    //        $scope.cleanAll();
-                    //    }
-                    //});
-
-                    //angular.forEach(self.otherEventCombinationDictionary, function (value) {
-                    //    if (angular.equals(self.keysPressed, value.keyCombination))
-                    //        $scope.cleanAll();
-                    //});
                 }
 
                 $scope.clean = function (event) {
@@ -69,6 +51,10 @@
                 $scope.cleanAll = function () {
                     self.keysPressed.splice(0, self.keysPressed.length);
                 };
+
+                $window.onfocus = function () {
+                    $scope.cleanAll();
+                }
 
             };
 
