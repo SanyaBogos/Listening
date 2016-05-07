@@ -6,7 +6,7 @@
 
             $scope.animationsEnabled = true;
 
-            $scope.showAlert = function (ev) {
+            $scope.showAlert = function () {
                 var modalInstance = $uibModal.open({
                     animation: $scope.animationsEnabled,
                     template: $templateCache.get('TextForListening/info.html'),

@@ -56,6 +56,11 @@
                     templateProvider: provide(pathTextForListening + 'text.html'),
                     controller: 'TextCtrl'
                 })
+                .state("currentTextJoined", {
+                    url: '/textJoined/:textId/:title/:subTitle/:audio',
+                    templateProvider: provide(pathTextForListening + 'textJoined.html'),
+                    controller: 'TextJoinedCtrl'
+                })
                 .state('administration', {
                     url: '/administration',
                     templateProvider: provide(pathAdmin + 'allTextsForEditing.html'),

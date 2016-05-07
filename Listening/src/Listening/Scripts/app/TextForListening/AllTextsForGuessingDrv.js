@@ -4,13 +4,39 @@
     angular.module('TextForListening')
         .controller('AllTextsForGuessingCtrl', function ($scope, $state) {
 
+            var self = this;
+            self.separated = 'Separated';
+            self.joined = 'Joined';
+
+            $scope.mode = self.separated;
+
             $scope.clickTextDescription = function (text) {
-                $state.go('currentText', {
-                    textId: text.textId,
-                    title: text.title,
-                    subTitle: text.subTitle,
-                    audio: text.audioName
-                });
+                                
+                switch ($scope.mode) {
+                    case self.separated:
+                        $state.go('currentText', {
+                            textId: text.textId,
+                            title: text.title,
+                            subTitle: text.subTitle,
+                            audio: text.audioName
+                        });
+                    case self.joined:
+                        $state.go('currentTextJoined', {
+                            textId: text.textId,
+                            title: text.title,
+                            subTitle: text.subTitle,
+                            audio: text.audioName
+                        });
+                    default:
+
+                }
+
+                //$state.go('currentText', {
+                //    textId: text.textId,
+                //    title: text.title,
+                //    subTitle: text.subTitle,
+                //    audio: text.audioName
+                //});
 
                 $scope.$emit('textPageOn');
             };
