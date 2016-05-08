@@ -6,44 +6,39 @@
 
             var self = this;
 
-            $scope.letters = [];
+            self.init = function () {
+                $scope.letters = [];
 
-            self.isGuessedWordFunc = function () {
-                $scope.letterCountObj.isGuessed = $scope.letters.every(function (e) {
-                    return !angular.isNumber(e.id);
-                });
-                //$scope.isGuessedWord = $scope.letters.every(function (e) {
-                //    return !angular.isNumber(e.id);
-                //});
-                if ($scope.letterCountObj.isGuessed)
-                    $scope.$emit('wordGuessed');
+                self.isGuessedWordFunc = function () {
+                    $scope.letterCountObj.isGuessed = $scope.letters.every(function (e) {
+                        return !angular.isNumber(e.id);
+                    });
 
+                    if ($scope.letterCountObj.isGuessed)
+                        $scope.$emit('wordGuessed');
+                };
+
+                $scope.letterCountObj.isGuessed = Word.buildLettersArray($scope.letters, $scope.letterCountObj.val);
             };
 
-            $scope.getCorrectLetter = function (letterIndex, event) {
-                console.log($scope.locator);
-                var newLocator = jQuery.extend(true, {}, $scope.locator);
-                newLocator.letterIndex = letterIndex;
+            self.addFunctions = function () {
+                $scope.getCorrectLetter = function (letterIndex, event) {
+                    console.log($scope.locator);
+                    var newLocator = jQuery.extend(true, {}, $scope.locator);
+                    newLocator.letterIndex = letterIndex;
 
-                if (!isNaN(parseInt(event.currentTarget.innerText))) {
-                    Word.hintLetter(newLocator, $scope.letters, self.isGuessedWordFunc);
-                }
+                    if (!isNaN(parseInt(event.currentTarget.innerText))) {
+                        Word.hintLetter(newLocator, $scope.letters, self.isGuessedWordFunc);
+                    }
+                };
+
+                $scope.setWordIndex = function () {
+                    $scope.$emit('setWordIndex', $scope.locator);
+                };
             };
 
-            $scope.setWordIndex = function () {
-                $scope.$emit('setWordIndex', $scope.locator);
-            };
-
-            $scope.buildLetterArray = function (letterCountObj) {
-                //$scope.isGuessedWord = Word.buildLettersArray($scope.letters, end);
-                //$scope.letterCountObj = letterCountObj;
-                //$scope.locator = locator;
-                $scope.letterCountObj.isGuessed = Word.buildLettersArray($scope.letters, letterCountObj.val);
-                //$scope.inputClass = Word.getInputClass(letterCountObj.val);
-                //$scope.inputClass = self.inputClassBase = Word.getInputClass(letterCountObj.val);
-            };
-
-            $scope.buildLetterArray($scope.letterCountObj);
+            self.init();
+            self.addFunctions();
         })
         .directive('buttonsWord', function ($templateCache) {
             return {

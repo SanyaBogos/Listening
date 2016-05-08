@@ -116,6 +116,41 @@ namespace WebListening.Controllers
             }
         }
 
+        [AllowAnonymous]
+        // TODO: remake this using http://stackoverflow.com/questions/9981330/how-to-pass-an-array-of-integers-to-a-asp-net-web-api-rest-service
+        [HttpPost("wordsForCheck/{id}")]
+        public JsonResult PostCheckWords(string id, [FromBody]string[] words)
+        {
+            try
+            {
+                var wordsInParagraphs = _textRepository.GetById(id).WordsInParagraphs;
+                var correctWordLocatorsDtoList = new List<CorrectWordLocatorsDto>();
+
+                //foreach (var word in words)
+                foreach (var word in new string[] { })
+                {
+                    var locators = new List<WordLocatorDto>();
+
+                    for (int i = 0; i < wordsInParagraphs.Length; i++)
+                        for (int j = 0; j < wordsInParagraphs[i].Length; j++)
+                            if (word.Equals(wordsInParagraphs[i][j], StringComparison.InvariantCultureIgnoreCase))
+                                locators.Add(new WordLocatorDto { ParagraphIndex = i, WordIndex = j });
+
+                    if (locators.Count > 0)
+                        correctWordLocatorsDtoList.Add(
+                            new CorrectWordLocatorsDto { Word = word, Locators = locators.ToArray() });
+                }
+
+                //return Json(correctWordLocatorsDtoList);
+                return Json(words);
+            }
+            catch (Exception)
+            {
+                Response.StatusCode = (int)HttpStatusCode.BadRequest;
+                return Json("Invalid operation");
+            }
+        }
+
         //private List<string[]> GetWordCounts(string[][] wordsInParagraphs)
         //{
         //    var specialSymbols = new string[] { ",", ".", "?", ":" };

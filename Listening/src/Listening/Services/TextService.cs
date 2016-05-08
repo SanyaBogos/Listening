@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using MongoDB.Bson;
 using WebListening.Models;
 using WebListening.Repositories;
+using AutoMapper;
 
 namespace WebListening.Services
 {
@@ -52,14 +53,9 @@ namespace WebListening.Services
                 sb.AppendLine();
             }
 
-            var textDto = new TextDto
-            {
-                TextId = text.TextId.ToString(),
-                Title = text.Title,
-                SubTitle = text.SubTitle,
-                AudioName = text.AudioName,
-                Text = sb.ToString()
-            };
+            var textDto = Mapper.Map<TextDto>(text);
+            textDto.Text = sb.ToString();
+            
             return textDto;
         }
 
@@ -89,14 +85,18 @@ namespace WebListening.Services
             }
 
             //TODO: make mapping here
-            var text = new Text
-            {
-                TextId = ObjectId.Parse(textDto.TextId),
-                Title = textDto.Title,
-                SubTitle = textDto.SubTitle,
-                AudioName = textDto.AudioName,
-                WordsInParagraphs = wordsInParagraphs.ToArray()
-            };
+            //var text = new Text
+            //{
+            //    TextId = ObjectId.Parse(textDto.TextId),
+            //    Title = textDto.Title,
+            //    SubTitle = textDto.SubTitle,
+            //    AudioName = textDto.AudioName,
+            //    WordsInParagraphs = wordsInParagraphs.ToArray()
+            //};
+            var text = Mapper.Map<Text>(textDto);
+            text.TextId = ObjectId.Parse(textDto.TextId);
+            text.WordsInParagraphs = wordsInParagraphs.ToArray();
+
             return text;
         }
 

@@ -1,15 +1,20 @@
 ﻿<text-description description="{title: title, subTitle: subTitle, audio: audio}"></text-description>
 
-<div style="margin-top:135px">
-    <hr />
-    <textarea class="width-750 height-200" ng-model="text"></textarea>
-    <select multiple ng-show="!!failedAttempts.length">
-        <option ng-repeat="attempt in failedAttempts">{{attempt}}</option>
-    </select>
-    <div style="margin-bottom: 50px" ng-repeat="hiddenWordsArray in hiddenWordsArrayInParagraphs track by $index">
-        <word class="word" ng-repeat="n in hiddenWordsArray track by $index"
-              letter-count-obj="n"
-              locator="{ wordIndex: $index, paragraphIndex: $parent.$index, textId: currentTextId}"
-              check-word-index="checkWordIndex(index)"></word>
+<div class="margin-top-135">
+    <div class="navbar navbar-fixed-top navbar-offset shift-from-top-145 text-center">
+        <hr />
+        <textarea class="width-750 height-200" ng-model="text"></textarea>
+        <!--<select multiple ng-show="!!failedAttempts.length">
+            <option ng-repeat="attempt in failedAttempts">{{attempt}}</option>
+        </select>-->
+        <textarea class="width-390 height-200" disabled></textarea>
+    </div>
+
+    <div class="shift-from-top-355" ng-repeat="hiddenWordsArray in hiddenWordsArrayInParagraphs track by $index">
+        <buttons-word class="margin-10" ng-repeat="n in hiddenWordsArray track by $index"
+                      letter-count-obj="n"
+                      locator="{ wordIndex: $index, paragraphIndex: $parent.$index, textId: currentTextId}"
+                      letters="letters">
+        </buttons-word>
     </div>
 </div>

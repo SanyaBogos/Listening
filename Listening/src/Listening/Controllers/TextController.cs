@@ -16,6 +16,7 @@ using WebListening.Exceptions;
 using WebListening.Models;
 using WebListening.Repositories;
 using WebListening.Services;
+using AutoMapper;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -39,14 +40,7 @@ namespace WebListening.Controllers
         [HttpGet]
         public IEnumerable<TextDescriptionDto> GetAllTextsDescription()
         {
-            return _textRepository.GetAll()
-                .Select(x => new TextDescriptionDto
-                {
-                    TextId = x.TextId,
-                    SubTitle = x.SubTitle,
-                    Title = x.Title,
-                    AudioName = x.AudioName
-                });
+            return Mapper.Map<IQueryable<Text>, IEnumerable<TextDescriptionDto>>(_textRepository.GetAll());
         }
 
         [HttpGet("{textId}")]

@@ -27,7 +27,8 @@
     "Microsoft.Extensions.Logging.Debug": "1.0.0-rc1-final",
     "Microsoft.VisualStudio.Web.BrowserLink.Loader": "14.0.0-rc1-final",
     "MongoDB.Driver": "2.2.3",
-    "PostSharp": "4.2.24"
+    "PostSharp": "4.2.24",
+    "AutoMapper": "4.2.1"
   },
 
   "commands": {

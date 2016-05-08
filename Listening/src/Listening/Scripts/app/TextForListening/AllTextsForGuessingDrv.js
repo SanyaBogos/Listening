@@ -11,7 +11,7 @@
             $scope.mode = self.separated;
 
             $scope.clickTextDescription = function (text) {
-                                
+
                 switch ($scope.mode) {
                     case self.separated:
                         $state.go('currentText', {
@@ -19,25 +19,18 @@
                             title: text.title,
                             subTitle: text.subTitle,
                             audio: text.audioName
-                        });
+                        }); break;
                     case self.joined:
                         $state.go('currentTextJoined', {
                             textId: text.textId,
                             title: text.title,
                             subTitle: text.subTitle,
                             audio: text.audioName
-                        });
-                    default:
+                        }); break;
+                    default: break;
 
                 }
-
-                //$state.go('currentText', {
-                //    textId: text.textId,
-                //    title: text.title,
-                //    subTitle: text.subTitle,
-                //    audio: text.audioName
-                //});
-
+                
                 $scope.$emit('textPageOn');
             };
 

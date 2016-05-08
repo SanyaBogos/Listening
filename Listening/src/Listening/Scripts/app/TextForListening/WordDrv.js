@@ -6,7 +6,6 @@
 
             var self = this;
 
-            //$scope.isGuessedWord = false;
             self.init = function () {
                 self.inputClassBase = '';
 
@@ -14,12 +13,10 @@
                 $scope.inputClass = '';
                 $scope.word = '';
                 $scope.failedAttempts = [];
-                //$templateCache.put('failedAttemptsTooltip.html', '<div ng-repeat="attempt in failedAttempts track by $index">{{attempt}}</div>');
 
                 self.successGuessed = function () {
                     $scope.letterCountObj.isGuessed = true;
                     $scope.$emit('wordGuessed');
-                    //$scope.isGuessedWord = true;
                 };
 
                 self.failGuessed = function (unguessedWord) {
@@ -31,48 +28,7 @@
                     }, 50);
                 };
             };
-
-            //$scope.letterCountObject = {};
-            //$scope.locator = {};
-
-
-            /*self.isGuessedWordFunc = function () {
-                $scope.letterCountObj.isGuessed = $scope.letters.every(function (e) {
-                    return !angular.isNumber(e.id);
-                });
-                //$scope.isGuessedWord = $scope.letters.every(function (e) {
-                //    return !angular.isNumber(e.id);
-                //});
-                if ($scope.letterCountObj.isGuessed)
-                    $scope.$emit('wordGuessed');
-
-            };*/
-
-            //self.isGuessedTrue = function () {
-            //    $scope.isGuessedWord = true;
-            //};
-
-
-
-            /*$scope.buildLetterArray = function (letterCountObj) {
-                //$scope.isGuessedWord = Word.buildLettersArray($scope.letters, end);
-                $scope.letterCountObj = letterCountObj;
-                //$scope.locator = locator;
-                $scope.letterCountObj.isGuessed = Word.buildLettersArray($scope.letters, letterCountObj.val);
-                //$scope.inputClass = Word.getInputClass(letterCountObj.val);
-                $scope.inputClass = self.inputClassBase = Word.getInputClass(letterCountObj.val);
-            };*/
-
-            /*$scope.getCorrectLetter = function (letterIndex, event) {
-                console.log($scope.locator);
-                var newLocator = jQuery.extend(true, {}, $scope.locator);
-                newLocator.letterIndex = letterIndex;
-
-                if (!isNaN(parseInt(event.currentTarget.innerText))) {
-                    Word.hintLetter(newLocator, $scope.letters, self.isGuessedWordFunc);
-                }
-            };*/
-
+            
             $scope.checkWord = function () {
                 console.log($scope.locator);
                 if ($scope.failedAttempts.indexOf($scope.word) === -1)
@@ -98,26 +54,13 @@
                 }
             };
 
-            //$scope.classInit = function () {
-            //};
-
             $scope.$watch("letterCountObj", function (newObj, oldObj) {
                 if (newObj == null || newObj.val == null)
                     return;
 
                 $scope.inputClass = self.inputClassBase = Word.getInputClass(newObj.val);
             });
-
-            /*$scope.setWordIndex = function () {
-                $scope.$emit('setWordIndex', $scope.locator);
-            };*/
-
-            //$scope.pressShiftDelete = function (event) {
-            //    if (event.which === 16 && event.which === 46) {
-            //        $scope.discardChanges();
-            //    }
-            //};
-
+            
             self.init();
         })
 
@@ -129,7 +72,6 @@
                     type: '=',
                     letterCountObj: '=',
                     locator: '=',
-                    //setWordIndex: '&',
                     checkWordIndex: '&'
                 },
                 templateUrl: 'TextForListening/word.html'

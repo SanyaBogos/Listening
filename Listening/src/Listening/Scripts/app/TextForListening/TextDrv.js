@@ -2,7 +2,7 @@
     'use strict';
 
     angular.module('TextForListening')
-        .controller('TextCtrl', function ($scope, $stateParams, WordSvcRest) {
+        .controller('TextCtrl', function ($scope, $stateParams, WordSvcRest, TextSvc) {
 
             var self = this;
 
@@ -42,33 +42,8 @@
                     }
                     return false;
                 };
-
-                self.fillParagraph = function (word) {
-                    var intValue = parseInt(word);
-                    if (!isNaN(intValue))
-                        $scope.hiddenWordsArrayInParagraphs[$scope.hiddenWordsArrayInParagraphs.length - 1]
-                            .push({ val: intValue, isGuessed: false });
-                    else
-                        $scope.hiddenWordsArrayInParagraphs[$scope.hiddenWordsArrayInParagraphs.length - 1]
-                            .push({ val: word, isGuessed: true });
-                };
-
-                self.getHiddenText = function () {
-                    console.log('id=' + $scope.currentTextId);
-                    WordSvcRest.getHiddenText($scope.currentTextId)
-                        .then(function (response) {
-                            $scope.hiddenWordsArrayInParagraphs.splice(0, $scope.hiddenWordsArrayInParagraphs.length);
-                            _.each(response.data, function (paragraph) {
-                                $scope.hiddenWordsArrayInParagraphs.push([]);
-                                _.each(paragraph, self.fillParagraph);
-                            });
-                            $scope.errorMessage = '';
-                        }, function (response) {
-                            $scope.errorMessage = 'Request failed';
-                        });
-                };
-
-                self.getHiddenText();
+                
+                TextSvc.buuildHiddenArrays($scope.myPromise, $scope.hiddenWordsArrayInParagraphs);
             };
 
             self.addFunctions = function () {

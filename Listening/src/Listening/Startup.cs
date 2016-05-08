@@ -14,6 +14,7 @@ using Newtonsoft.Json.Serialization;
 using WebListening.Models;
 using WebListening.Repositories;
 using WebListening.Services;
+using AutoMapper;
 
 namespace WebListening
 {
@@ -61,6 +62,12 @@ namespace WebListening
                                                                     .AllowAnyMethod()
                                                                     .AllowAnyHeader()));
 
+            Mapper.Initialize(x =>
+            {
+                x.CreateMap<Text, TextDescriptionDto>();
+                x.CreateMap<Text, TextDto>().ReverseMap();
+            });
+
             // Add application services.
             services.AddTransient<IEmailSender, AuthMessageSender>();
             services.AddTransient<ISmsSender, AuthMessageSender>();
@@ -76,8 +83,7 @@ namespace WebListening
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
 
-            //if (env.IsDevelopment())
-            if (true)
+            if (env.IsDevelopment())
             {
                 app.UseBrowserLink();
                 app.UseDeveloperExceptionPage();

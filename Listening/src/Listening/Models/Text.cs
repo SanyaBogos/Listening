@@ -35,14 +35,26 @@ namespace WebListening.Models
         public string AudioName { get; set; }
     }
 
-    public class LetterLocatorDto : WordLocatorDto
+    //public class LetterLocatorDto : WordLocatorDto
+    //{
+    //    public int LetterIndex { get; set; }
+    //}
+
+    //public class WordLocatorDto
+    //{
+    //    public string TextId { get; set; }
+    //    public int ParagraphIndex { get; set; }
+    //    public int WordIndex { get; set; }
+    //}
+
+    public class CorrectWordLocatorsDto
     {
-        public int LetterIndex { get; set; }
+        public string Word { get; set; }
+        public WordLocatorDto[] Locators { get; set; }
     }
 
     public class WordLocatorDto
     {
-        public string TextId { get; set; }
         public int ParagraphIndex { get; set; }
         public int WordIndex { get; set; }
     }
