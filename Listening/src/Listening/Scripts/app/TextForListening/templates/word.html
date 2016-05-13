@@ -1,14 +1,6 @@
-﻿<!--<div ng-init="buildLetterArray(letterCountObj)"></div>-->
-<div uib-tooltip-template="'TextForListening/failedAttemptsTooltip.html'"
+﻿<div uib-tooltip-template="'TextForListening/failedAttemptsTooltip.html'"
      tooltip-placement="top"
      tooltip-is-open="checkWordIndex({index:locator}) && !letterCountObj.isGuessed">
-    <!--<button class="btn"
-            ng-repeat="letter in letters track by $index"
-            ng-click="!letterCountObj.isGuessed && setWordIndex()"
-            ng-dblclick="getCorrectLetter(letter.id, $event)"
-            ng-class="letter.class">
-        {{letter.id}}
-    </button>-->
     <buttons-word letter-count-obj="letterCountObj" locator="locator" letters="letters"></buttons-word>
     <br />
     <div ng-show="checkWordIndex({index:locator})">

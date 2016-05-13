@@ -126,23 +126,26 @@ namespace WebListening.Controllers
                 var wordsInParagraphs = _textRepository.GetById(id).WordsInParagraphs;
                 var correctWordLocatorsDtoList = new List<CorrectWordLocatorsDto>();
 
-                //foreach (var word in words)
-                foreach (var word in new string[] { })
+                foreach (var word in words)
                 {
                     var locators = new List<WordLocatorDto>();
 
                     for (int i = 0; i < wordsInParagraphs.Length; i++)
                         for (int j = 0; j < wordsInParagraphs[i].Length; j++)
                             if (word.Equals(wordsInParagraphs[i][j], StringComparison.InvariantCultureIgnoreCase))
-                                locators.Add(new WordLocatorDto { ParagraphIndex = i, WordIndex = j });
+                                locators.Add(new WordLocatorDto
+                                {
+                                    ParagraphIndex = i,
+                                    WordIndex = j,
+                                    IsCapital = char.IsUpper(wordsInParagraphs[i][j].First())
+                                });
 
                     if (locators.Count > 0)
                         correctWordLocatorsDtoList.Add(
-                            new CorrectWordLocatorsDto { Word = word, Locators = locators.ToArray() });
+                            new CorrectWordLocatorsDto { Locators = locators.ToArray(), Word = word });
                 }
 
-                //return Json(correctWordLocatorsDtoList);
-                return Json(words);
+                return Json(correctWordLocatorsDtoList);
             }
             catch (Exception)
             {

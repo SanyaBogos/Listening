@@ -16,7 +16,7 @@
             wordRest.getLetter = function (locator) {
                 return $http({
                     method: 'GET',
-                    url: urlBase + 'letter/' + locator.textId + '/' + locator.paragraphIndex + '/' 
+                    url: urlBase + 'letter/' + locator.textId + '/' + locator.paragraphIndex + '/'
                                 + locator.wordIndex + '/' + (locator.letterIndex - 1).toString()
                 });
             };
@@ -25,6 +25,14 @@
                 return $http({
                     method: 'GET',
                     url: urlBase + 'wordCorrectness/' + locator.textId + '/' + locator.paragraphIndex + '/' + locator.wordIndex + '/' + word
+                });
+            };
+
+            wordRest.postWordsArray = function (textId, words) {
+                return $http({
+                    method: 'POST',
+                    url: urlBase + 'wordsForCheck/' + textId,
+                    data: words
                 });
             };
 

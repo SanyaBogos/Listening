@@ -57,5 +57,6 @@ namespace WebListening.Models
     {
         public int ParagraphIndex { get; set; }
         public int WordIndex { get; set; }
+        public bool IsCapital { get; set; }
     }
 }

@@ -65,7 +65,9 @@ namespace WebListening
             Mapper.Initialize(x =>
             {
                 x.CreateMap<Text, TextDescriptionDto>();
-                x.CreateMap<Text, TextDto>().ReverseMap();
+                x.CreateMap<TextDto, Text>()
+                    .ForMember(d => d.TextId, opt => opt.MapFrom(s => ObjectId.Parse(s.TextId)))
+                    .ReverseMap();
             });
 
             // Add application services.

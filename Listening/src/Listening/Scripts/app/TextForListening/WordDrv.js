@@ -28,7 +28,7 @@
                     }, 50);
                 };
             };
-            
+
             $scope.checkWord = function () {
                 console.log($scope.locator);
                 if ($scope.failedAttempts.indexOf($scope.word) === -1)
@@ -60,7 +60,7 @@
 
                 $scope.inputClass = self.inputClassBase = Word.getInputClass(newObj.val);
             });
-            
+
             self.init();
         })
 
