@@ -1,17 +1,20 @@
-﻿<text-description description="{title: title, subTitle: subTitle, audio: audio}"></text-description>
-
-<div class="margin-top-135">
-    <div class="navbar navbar-fixed-top navbar-offset shift-from-top-174 text-center">
-        <hr />
+﻿<div class="navbar navbar-fixed-top navbar-offset shift-from-top-51">
+    <text-description description="{title: title, subTitle: subTitle, audio: audio}"></text-description>
+    <div class="text-center">
         <textarea class="width-750 height-200" ng-model="text" ng-keypress="keyPress($event)"></textarea>
         <textarea class="width-390 height-200" ng-model="failedAttemptsText" disabled></textarea>
     </div>
+</div>
 
-    <div class="shift-from-top-375" ng-repeat="hiddenWordsArray in hiddenWordsArrayInParagraphs track by $index">
-        <buttons-word class="margin-10" ng-repeat="n in hiddenWordsArray track by $index"
-                      letter-count-obj="n"
-                      locator="{ wordIndex: $index, paragraphIndex: $parent.$index, textId: currentTextId}"
-                      letters="letters">
-        </buttons-word>
+<div class="margin-top-135">
+    <div class="shift-from-top-375">
+        <div ng-repeat="hiddenWordsArray in hiddenWordsArrayInParagraphs track by $index">
+            <buttons-word class="margin-10" ng-repeat="n in hiddenWordsArray track by $index"
+                          letter-count-obj="n"
+                          locator="{ wordIndex: $index, paragraphIndex: $parent.$index, textId: currentTextId}"
+                          letters="letters">
+            </buttons-word>
+        </div>
     </div>
+
 </div>

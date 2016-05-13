@@ -49,11 +49,11 @@
                     //}, function (resp) {
                     //    $scope.errorsFromServer.push(resp.data);
                     //});
-                    FileSvcRest.upload($scope.textDto.textId, $scope.file);/*.then(function (resp) {
+                    FileSvcRest.upload($scope.textDto.textId, $scope.file).then(function (resp) {
                         $scope.successMessage = 'File uploaded successfully!';
                     }, function (resp) {
                         $scope.errorsFromServer.push(resp.data);
-                    });*/
+                    });
                 }
 
                 if (!!$scope.errorsFromServer && !$scope.errorsFromServer.length) {

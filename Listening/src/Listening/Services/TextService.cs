@@ -13,22 +13,23 @@ namespace WebListening.Services
     public class TextService
     {
         private readonly IRepository<Text> _textRepository;
+        private string[] _specialSymbols;
 
         public TextService(IRepository<Text> repository)
         {
             _textRepository = repository;
+            _specialSymbols = new string[] { ",", ".", "?", ":", ";", "-" };
         }
 
         public string[][] GetWordCounts(string[][] wordsInParagraphs)
         {
-            var specialSymbols = new string[] { ",", ".", "?", ":", ";" };
             var wordsCounts = new List<string[]>();
 
             foreach (var hiddenWordsInParagraphs in wordsInParagraphs)
             {
                 var hiddenWordsLengthInText = new List<string>();
                 foreach (var word in hiddenWordsInParagraphs)
-                    if (specialSymbols.Contains(word))
+                    if (_specialSymbols.Contains(word))
                         hiddenWordsLengthInText.Add(word);
                     else
                         hiddenWordsLengthInText.Add(word.Length.ToString());
@@ -61,7 +62,7 @@ namespace WebListening.Services
 
         public Text GenerateTextByDto(TextDto textDto)
         {
-            var specialSymbols = new char[] { ',', '.', '?', ':', ';' };
+            var specialSymbols = Array.ConvertAll(_specialSymbols, item => Convert.ToChar(item));
             var paragraphs = textDto.Text.Split(new string[] { "\r\n", "\n", "\n " }, StringSplitOptions.RemoveEmptyEntries);
             var wordsInParagraphs = new List<string[]>();
 
@@ -70,7 +71,6 @@ namespace WebListening.Services
                 var words = new List<string>();
                 foreach (var word in paragraph.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
                 {
-                    //if (word.Last() == ',' || word.Last() == '.')
                     if (specialSymbols.Contains(word.Last()))
                     {
                         words.Add(word.Substring(0, word.Length - 1));
