@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Http;
 using Microsoft.AspNet.Mvc;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Net.Http.Headers;
 using WebListening.Exceptions;
 
@@ -17,7 +18,19 @@ namespace WebListening.Controllers
     public class FileController : Controller
     {
         // TODO: remove hardcoded path to config json and set it up in ConfigureService method
-        private string _path = @"Audio\";
+        private string _path; //= @"Audio\";
+
+        private readonly IConfiguration _configuration;
+
+        public FileController()
+        {
+            var builder = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json");
+
+            _configuration = builder.Build();
+
+            _path = _configuration["FileStorage:AudioPath"];
+        }
 
         [HttpPut("{id}")]
         public JsonResult PutAudioFile(string id, IList<IFormFile> files)
