@@ -97,6 +97,7 @@ namespace WebListening.Controllers
         {
             try
             {
+                value = value.Replace("`", "'");
                 Response.StatusCode = (int)HttpStatusCode.OK;
                 return Json(value.Equals(_textRepository.GetById(id)
                             .WordsInParagraphs[paragraphIndex][wordIndex]));
@@ -123,10 +124,11 @@ namespace WebListening.Controllers
         {
             try
             {
+                var formattedWords = words.Select(x=>x.Replace("`", "'")).ToArray();
                 var wordsInParagraphs = _textRepository.GetById(id).WordsInParagraphs;
                 var correctWordLocatorsDtoList = new List<CorrectWordLocatorsDto>();
 
-                foreach (var word in words)
+                foreach (var word in formattedWords)
                 {
                     var locators = new List<WordLocatorDto>();
 

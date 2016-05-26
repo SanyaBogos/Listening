@@ -52,7 +52,7 @@
             };
 
             word.checkWord = function (locator, letters, word, success, fail) {
-                WordSvcRest.postWord(locator, word)
+                WordSvcRest.postWord(locator, word.replace("'","`"))
                     .then(function (response) {
                         if (response.data == true) {
                             for (var i = 0; i < letters.length; i++) {

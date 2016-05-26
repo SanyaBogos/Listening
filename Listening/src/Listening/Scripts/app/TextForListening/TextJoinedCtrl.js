@@ -23,15 +23,17 @@
 
             self.addFunctions = function () {
                 $scope.checkWords = function () {
-                    var words = $scope.text.replace(/[^a-zA-Z0-9 ]/g, '')
-                                           .replace(/ +(?= )/g, '')
-                                           .split(" ");
+                    var formattedText = $scope.text.replace(/[^a-zA-Z0-9' ]/g, '')
+                                           .replace(/ +(?= )/g, '');
 
-                    var uniqueWords = words.filter(function (item, index, inputArray) {
+                    var wordsToSend = formattedText.replace("'", "`").split(" ");
+
+
+                    var uniqueWords = formattedText.split(" ").filter(function (item, index, inputArray) {
                         return inputArray.indexOf(item) == index;
                     });
 
-                    WordSvcRest.postWordsArray($scope.currentTextId, words).then(function (response) {
+                    WordSvcRest.postWordsArray($scope.currentTextId, wordsToSend).then(function (response) {
                         //console.log(response);
                         var correctWords = [];
 

@@ -18,7 +18,7 @@ namespace WebListening.Services
         public TextService(IRepository<Text> repository)
         {
             _textRepository = repository;
-            _specialSymbols = new string[] { ",", ".", "?", ":", ";", "-" };
+            _specialSymbols = new string[] { ",", ".", "?", ":", ";", "-", "!" };
         }
 
         public string[][] GetWordCounts(string[][] wordsInParagraphs)
@@ -46,7 +46,7 @@ namespace WebListening.Services
             foreach (var paragraph in text.WordsInParagraphs)
             {
                 foreach (var wordOrSymbol in paragraph)
-                    if (wordOrSymbol.Equals(",") || wordOrSymbol.Equals("."))
+                    if (_specialSymbols.Contains(wordOrSymbol))
                         sb.Append($"{wordOrSymbol}");
                     else
                         sb.Append($" {wordOrSymbol}");
@@ -63,7 +63,12 @@ namespace WebListening.Services
         public Text GenerateTextByDto(TextDto textDto)
         {
             var specialSymbols = Array.ConvertAll(_specialSymbols, item => Convert.ToChar(item));
-            var paragraphs = textDto.Text.Split(new string[] { "\r\n", "\n", "\n " }, StringSplitOptions.RemoveEmptyEntries);
+            var formattedText = textDto.Text.Replace("’", "'").Replace("  ", " ");
+            foreach (var symbol in _specialSymbols)
+                formattedText = formattedText.Replace($" {symbol}", $"{symbol}");
+
+            var paragraphs = formattedText
+                .Split(new string[] { "\r\n", "\n", "\n " }, StringSplitOptions.RemoveEmptyEntries);
             var wordsInParagraphs = new List<string[]>();
 
             foreach (var paragraph in paragraphs)
