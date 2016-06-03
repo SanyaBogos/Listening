@@ -23,13 +23,14 @@ namespace WebListening.Services
 
         public string[][] GetWordCounts(string[][] wordsInParagraphs)
         {
+            var specialSymbols = Array.ConvertAll(_specialSymbols, item => Convert.ToChar(item));
             var wordsCounts = new List<string[]>();
 
             foreach (var hiddenWordsInParagraphs in wordsInParagraphs)
             {
                 var hiddenWordsLengthInText = new List<string>();
                 foreach (var word in hiddenWordsInParagraphs)
-                    if (_specialSymbols.Contains(word))
+                    if (word.All(x => specialSymbols.Contains(x)))
                         hiddenWordsLengthInText.Add(word);
                     else
                         hiddenWordsLengthInText.Add(word.Length.ToString());
@@ -75,17 +76,7 @@ namespace WebListening.Services
             {
                 var words = new List<string>();
                 foreach (var word in paragraph.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    if (specialSymbols.Contains(word.Last()))
-                    {
-                        words.Add(word.Substring(0, word.Length - 1));
-                        words.Add(word.Last().ToString());
-                    }
-                    else
-                    {
-                        words.Add(word);
-                    }
-                }
+                    DevideWordAndSpecialSymbols(specialSymbols, words, word);
                 wordsInParagraphs.Add(words.ToArray());
             }
 
@@ -95,21 +86,17 @@ namespace WebListening.Services
             return text;
         }
 
-        //public char GetLetter(LetterLocatorDto letterLocator)
-        //{
-        //    return _textRepository.GetById(letterLocator.TextId)
-        //                .WordsInParagraphs[letterLocator.ParagraphIndex][letterLocator.WordIndex][letterLocator.LetterIndex];
-        //}
+        private void DevideWordAndSpecialSymbols(char[] specialSymbols, List<string> words, string word)
+        {
+            var indexer = word.Length;
+            while (specialSymbols.Contains(word[indexer - 1]))
+                indexer--;
 
-        //public bool CheckWordCorrectness(WordLocatorDto wordLocator, string value)
-        //{
-        //    return value.Equals(_textRepository.GetById(wordLocator.TextId)
-        //                    .WordsInParagraphs[wordLocator.ParagraphIndex][wordLocator.WordIndex]);
-        //}
+            if (indexer != 0)
+                words.Add(word.Substring(0, indexer));
 
-        //public Text GetTextById(string id)
-        //{
-        //    return _textRepository.GetById(id);
-        //}
+            if (word.Length != indexer)
+                words.Add(word.Substring(indexer, word.Length - indexer));
+        }
     }
 }
