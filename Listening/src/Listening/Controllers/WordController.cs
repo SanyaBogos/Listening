@@ -27,11 +27,6 @@ namespace WebListening.Controllers
             _textService = textService;
         }
 
-        //public WordController(TextService textService)
-        //{
-        //    _textService = textService;
-        //}
-
         [HttpGet("wordsInParagraphs/{id}")]
         public JsonResult GetWordsInParagraphs(string id)
         {
@@ -124,7 +119,7 @@ namespace WebListening.Controllers
         {
             try
             {
-                var formattedWords = words.Select(x=>x.Replace("`", "'")).ToArray();
+                var formattedWords = words.Select(x => x.Replace("`", "'")).ToArray();
                 var wordsInParagraphs = _textRepository.GetById(id).WordsInParagraphs;
                 var correctWordLocatorsDtoList = new List<CorrectWordLocatorsDto>();
 

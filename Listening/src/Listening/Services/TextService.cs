@@ -14,11 +14,13 @@ namespace WebListening.Services
     {
         private readonly IRepository<Text> _textRepository;
         private string[] _specialSymbols;
+        private char[] _moneySymbols;
 
         public TextService(IRepository<Text> repository)
         {
             _textRepository = repository;
             _specialSymbols = new string[] { ",", ".", "?", ":", ";", "-", "!" };
+            _moneySymbols = new char[] { '$', '£', '€' };
         }
 
         public string[][] GetWordCounts(string[][] wordsInParagraphs)
@@ -30,7 +32,7 @@ namespace WebListening.Services
             {
                 var hiddenWordsLengthInText = new List<string>();
                 foreach (var word in hiddenWordsInParagraphs)
-                    if (word.All(x => specialSymbols.Contains(x)))
+                    if (word.All(x => specialSymbols.Contains(x) || _moneySymbols.Contains(x)))
                         hiddenWordsLengthInText.Add(word);
                     else
                         hiddenWordsLengthInText.Add(word.Length.ToString());
@@ -47,7 +49,7 @@ namespace WebListening.Services
             foreach (var paragraph in text.WordsInParagraphs)
             {
                 foreach (var wordOrSymbol in paragraph)
-                    if (_specialSymbols.Contains(wordOrSymbol))
+                    if (_specialSymbols.Except(new string[] { "-" }).Contains(wordOrSymbol))
                         sb.Append($"{wordOrSymbol}");
                     else
                         sb.Append($" {wordOrSymbol}");
@@ -63,7 +65,6 @@ namespace WebListening.Services
 
         public Text GenerateTextByDto(TextDto textDto)
         {
-            var specialSymbols = Array.ConvertAll(_specialSymbols, item => Convert.ToChar(item));
             var formattedText = textDto.Text.Replace("’", "'").Replace("  ", " ");
             foreach (var symbol in _specialSymbols)
                 formattedText = formattedText.Replace($" {symbol}", $"{symbol}");
@@ -76,7 +77,7 @@ namespace WebListening.Services
             {
                 var words = new List<string>();
                 foreach (var word in paragraph.Split(new string[] { " " }, StringSplitOptions.RemoveEmptyEntries))
-                    DevideWordAndSpecialSymbols(specialSymbols, words, word);
+                    DevideWordAndSpecialSymbols(words, word);
                 wordsInParagraphs.Add(words.ToArray());
             }
 
@@ -86,17 +87,26 @@ namespace WebListening.Services
             return text;
         }
 
-        private void DevideWordAndSpecialSymbols(char[] specialSymbols, List<string> words, string word)
+        private void DevideWordAndSpecialSymbols(List<string> words, string word)
         {
-            var indexer = word.Length;
-            while (specialSymbols.Contains(word[indexer - 1]))
-                indexer--;
+            var specialSymbols = Array.ConvertAll(_specialSymbols, item => Convert.ToChar(item));
+            var endIndexer = word.Length;
+            var startIndexer = 0;
 
-            if (indexer != 0)
-                words.Add(word.Substring(0, indexer));
+            if (_moneySymbols.Contains(word.First()))
+            {
+                words.Add(word.First().ToString());
+                startIndexer++;
+            }
 
-            if (word.Length != indexer)
-                words.Add(word.Substring(indexer, word.Length - indexer));
+            while (specialSymbols.Contains(word[endIndexer - 1]))
+                endIndexer--;
+
+            if (endIndexer != startIndexer)
+                words.Add(word.Substring(startIndexer, endIndexer - startIndexer));
+
+            if (word.Length != endIndexer)
+                words.Add(word.Substring(endIndexer, word.Length - endIndexer));
         }
     }
 }

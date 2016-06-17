@@ -18,7 +18,7 @@
                 $scope.failedAttemptsText = '';
 
                 $scope.myPromise = WordSvcRest.getHiddenText($scope.currentTextId);
-                TextSvc.buuildHiddenArrays($scope.myPromise, $scope.hiddenWordsArrayInParagraphs);
+                TextSvc.buildHiddenArrays($scope.myPromise, $scope.hiddenWordsArrayInParagraphs);
             };
 
             self.addFunctions = function () {

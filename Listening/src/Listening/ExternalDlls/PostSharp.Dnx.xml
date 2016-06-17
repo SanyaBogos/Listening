@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>PostSharp.Dnx</name>
+    </assembly>
+    <members>
+        <member name="T:PostSharp.Dnx.PostSharpCompilerModule">
+            <summary>
+            A DNX compile module that post-processes the project using PostSharp.
+            </summary>
+        </member>
+    </members>
+</doc>

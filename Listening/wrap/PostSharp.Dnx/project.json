@@ -1,0 +1,11 @@
+{
+  "version": "1.0.0-*",
+  "frameworks": {
+    "dnx451": {
+      "bin": {
+        "assembly": "../../src/Listening/ExternalDlls/PostSharp.Dnx.dll",
+        "pdb": "../../src/Listening/ExternalDlls/PostSharp.Dnx.pdb"
+      }
+    }
+  }
+}

@@ -17,7 +17,7 @@
             };
 
             return {
-                buuildHiddenArrays: function (promise, array) {
+                buildHiddenArrays: function (promise, array) {
                     self.array = array;
                     promise
                         .then(function (response) {
