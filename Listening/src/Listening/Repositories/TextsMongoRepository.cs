@@ -39,7 +39,7 @@ namespace WebListening.Repositories
             return _collection.Find(new BsonDocument()).ToList().AsQueryable();
         }
 
-        public Text GetById(string id)
+        public Text Get(string id)
         {
             //var collection = _dataBase.GetCollection<Text>(_collectionName);
             var filter = Builders<Text>.Filter.Eq("TextId", ObjectId.Parse(id));
