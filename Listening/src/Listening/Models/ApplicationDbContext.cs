@@ -9,6 +9,11 @@ namespace WebListening.Models
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            optionsBuilder.UseSqlite("Data Source=./ListeningSQLite.db");
+        }
+
         protected override void OnModelCreating(ModelBuilder builder)
         {
             //this.Model.

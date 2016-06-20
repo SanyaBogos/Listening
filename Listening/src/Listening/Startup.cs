@@ -45,8 +45,9 @@ namespace WebListening
             // Add framework services.
             services.AddEntityFramework()
                 .AddSqlServer()
+                .AddSqlite()
                 .AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration["Data:DefaultConnection:ConnectionString"]));
+                    options.UseSqlite(Configuration["Data:DefaultConnection:ConnectionString"]));
 
             services.AddIdentity<ApplicationUser, IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>()
