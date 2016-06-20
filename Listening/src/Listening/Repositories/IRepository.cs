@@ -8,7 +8,7 @@ namespace WebListening.Repositories
     public interface IRepository<T>
     {
         IQueryable<T> GetAll();
-        T Get(string id);
+        T GetById(string id);
         void Insert(T item);
         void Update(T intem);
         void Delete(string itemId);

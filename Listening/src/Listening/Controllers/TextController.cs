@@ -17,14 +17,12 @@ using WebListening.Models;
 using WebListening.Repositories;
 using WebListening.Services;
 using AutoMapper;
-using Listening.Aspect;
 
 // For more information on enabling Web API for empty projects, visit http://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace WebListening.Controllers
 {
     [EnableCors("AllowAll")]
-    [ExceptionHandle]
     [Authorize(Roles = "admin")]
     [Route("api/[controller]")]
     public class TextController : Controller

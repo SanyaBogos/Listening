@@ -44,7 +44,7 @@ namespace WebListening.Services
 
         public TextDto GenerateTextDtoById(string textId)
         {
-            var text = _textRepository.Get(textId);
+            var text = _textRepository.GetById(textId);
             var sb = new StringBuilder();
             foreach (var paragraph in text.WordsInParagraphs)
             {
@@ -85,34 +85,6 @@ namespace WebListening.Services
             text.WordsInParagraphs = wordsInParagraphs.ToArray();
 
             return text;
-        }
-
-        public List<CorrectWordLocatorsDto> CheckWordsCorrectness(string id, string[] words)
-        {
-            var formattedWords = words.Select(x => x.Replace("`", "'")).ToArray();
-            var wordsInParagraphs = _textRepository.Get(id).WordsInParagraphs;
-            var correctWordLocatorsDtoList = new List<CorrectWordLocatorsDto>();
-
-            foreach (var word in formattedWords)
-            {
-                var locators = new List<WordLocatorDto>();
-
-                for (int i = 0; i < wordsInParagraphs.Length; i++)
-                    for (int j = 0; j < wordsInParagraphs[i].Length; j++)
-                        if (word.Equals(wordsInParagraphs[i][j], StringComparison.InvariantCultureIgnoreCase))
-                            locators.Add(new WordLocatorDto
-                            {
-                                ParagraphIndex = i,
-                                WordIndex = j,
-                                IsCapital = char.IsUpper(wordsInParagraphs[i][j].First())
-                            });
-
-                if (locators.Count > 0)
-                    correctWordLocatorsDtoList.Add(
-                        new CorrectWordLocatorsDto { Locators = locators.ToArray(), Word = word });
-            }
-
-            return correctWordLocatorsDtoList;
         }
 
         private void DevideWordAndSpecialSymbols(List<string> words, string word)
