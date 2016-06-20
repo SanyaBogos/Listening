@@ -37,12 +37,6 @@
         "PostSharp.Dnx": "1.0.0-*"
     },
 
-    "compiler": {
-        "name": "PostSharp",
-        "compilerAssembly": "PostSharp.Dnx",
-        "compilerType": "PostSharp.Dnx.PostSharpProjectCompiler"
-    },
-
     "commands": {
         "web": "Microsoft.AspNet.Server.Kestrel",
         "ef": "EntityFramework.Commands"
@@ -65,6 +59,6 @@
         "**.vspscc"
     ],
     "scripts": {
-        "prepublish": [ "npm install", "bower install", "gulp clean", "gulp min" ]
+      "prepublish": [ "npm npm cache clean", "npm install", "bower install --allow-root", "gulp clean", "gulp min", "gulp angularCompile" ]
     }
 }
