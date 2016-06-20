@@ -59,6 +59,6 @@
         "**.vspscc"
     ],
     "scripts": {
-      "prepublish": [ "npm npm cache clean", "npm install", "bower install --allow-root", "gulp clean", "gulp min", "gulp angularCompile" ]
+      "prepublish": [ "npm cache clean", "npm install", "bower install --allow-root", "gulp clean", "gulp min", "gulp angularCompile" ]
     }
 }
