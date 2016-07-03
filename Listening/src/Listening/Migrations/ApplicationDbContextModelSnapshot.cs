@@ -145,6 +145,29 @@ namespace Listening.Migrations
                     b.HasAnnotation("Relational:TableName", "AspNetUsers");
                 });
 
+            modelBuilder.Entity<UserTextProgress>(entity =>
+            {
+                entity.Property(e => e.UserId)
+                       .IsRequired()
+                       .HasColumnType("text");
+
+                entity.Property(e => e.TextId)
+                    .IsRequired()
+                    .HasColumnType("text");
+
+                entity.Property(e => e.ProgressArray)
+                    .IsRequired()
+                    .HasColumnType("varbinary(5000)");
+
+                entity.Property(e => e.Started)
+                    .IsRequired()
+                    .HasColumnType("datetime");
+
+                entity.Property(e => e.Finished)
+                     .IsRequired()
+                     .HasColumnType("datetime");
+            });
+
             modelBuilder.Entity("Microsoft.AspNet.Identity.EntityFramework.IdentityRoleClaim<string>", b =>
                 {
                     b.HasOne("Microsoft.AspNet.Identity.EntityFramework.IdentityRole")

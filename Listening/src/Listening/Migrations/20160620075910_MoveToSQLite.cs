@@ -127,6 +127,29 @@ namespace Listening.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateTable(
+                name: "UserTextProgress",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false),
+                    UserId = table.Column<string>(nullable: false),
+                    TextId = table.Column<string>(nullable: false),
+                    ProgressArray = table.Column<byte[]>(nullable: false),
+                    Started = table.Column<DateTime>(nullable: false),
+                    Finished = table.Column<DateTime>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_IdentityUserTextProgress<int>", x => new { x.Id });
+                    table.ForeignKey(
+                        name: "FK_IdentityUser<string>_IdentityUser_UserId",
+                        column: x => x.UserId,
+                        principalTable: "AspNetUsers",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "RoleNameIndex",
                 table: "AspNetRoles",
