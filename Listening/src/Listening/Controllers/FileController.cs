@@ -29,7 +29,11 @@ namespace WebListening.Controllers
 
             _configuration = builder.Build();
 
-            _path = _configuration["FileStorage:AudioPath"];
+#if DEBUG
+            _path = "audio";
+#else
+            _path = Directory.GetCurrentDirectory() + _configuration["FileStorage:AudioPath"];
+#endif
         }
 
         [HttpPut("{id}")]
