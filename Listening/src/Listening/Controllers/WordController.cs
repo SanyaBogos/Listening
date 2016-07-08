@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Authorization;
 using Microsoft.AspNet.Cors;
+using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Mvc;
 using MongoDB.Bson;
 using WebListening.Models;
@@ -20,11 +22,19 @@ namespace WebListening.Controllers
     {
         private readonly TextService _textService;
         private readonly IRepository<Text> _textRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly ApplicationDbContext _context;
 
-        public WordController(IRepository<Text> repository, TextService textService)
+        public WordController(
+            IRepository<Text> repository,
+            TextService textService,
+            UserManager<ApplicationUser> userManager,
+            ApplicationDbContext context)
         {
+            _userManager = userManager;
             _textRepository = repository;
             _textService = textService;
+            _context = context;
         }
 
         [HttpGet("wordsInParagraphs/{id}")]
@@ -40,6 +50,14 @@ namespace WebListening.Controllers
         {
             try
             {
+                var userId = User.GetUserId();
+
+                if (userId != null)
+                {
+                    // TODO: read data from DB
+                }
+
+
                 var wordsInParagraphs = _textRepository.GetById(id).WordsInParagraphs;
                 var wordsCounts = _textService.GetWordCounts(wordsInParagraphs);
                 Response.StatusCode = (int)HttpStatusCode.OK;
@@ -63,6 +81,27 @@ namespace WebListening.Controllers
         {
             try
             {
+                var userId = User.GetUserId();
+
+                if (userId != null)
+                {
+                    // TODO: read data from DB
+                    var userProgress = _context.UserTextProgresses
+                                            .Where(x => x.UserId == userId
+                                            && x.TextId == id
+                                            && x.Started != null);
+
+                    //if (userProgress.e)
+                    //{
+
+                    //}
+
+                    //if (!_context.UserTextProgresses.Any(x=>x.))
+                    //{
+
+                    //}
+                }
+
                 Response.StatusCode = (int)HttpStatusCode.OK;
                 return Json(_textRepository.GetById(id)
                                 .WordsInParagraphs[paragraphIndex]
