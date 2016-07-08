@@ -1,4 +1,4 @@
-﻿{
+{
     "userSecretsId": "aspnet5-Listening-686d6df1-e23b-47a1-ad50-d698dfeec7ee",
     "version": "1.0.0-*",
     "compilationOptions": {
@@ -34,7 +34,8 @@
         "Microsoft.Dnx.Compilation.CSharp.Abstractions": "1.0.0-rc1-final",
         "Microsoft.Dnx.Compilation.CSharp.Common": "1.0.0-rc1-final",
         "PostSharp.Compiler.Client": "4.2.14",
-        "PostSharp.Dnx": "1.0.0-*"
+        "PostSharp.Dnx": "1.0.0-*",
+        "Microsoft.AspNet.Identity": "3.0.0-rc1-final"
     },
 
     "commands": {
