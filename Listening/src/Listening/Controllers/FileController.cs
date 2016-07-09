@@ -48,6 +48,8 @@ namespace WebListening.Controllers
                         var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
                         Console.WriteLine("filename");
                         Console.WriteLine(fileName);
+                        Console.WriteLine("_path");
+                        Console.WriteLine(_path);
 
                         var filesInFolder = Directory.GetFiles(_path);
                         filesInFolder = filesInFolder
