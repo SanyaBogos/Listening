@@ -71,11 +71,15 @@ namespace WebListening.Controllers
             }
             catch (FileUploadException ex)
             {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
             catch (Exception)
             {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex.StackTrace);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("Invalid operation");
             }
