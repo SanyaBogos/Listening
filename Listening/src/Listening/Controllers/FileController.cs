@@ -46,9 +46,19 @@ namespace WebListening.Controllers
                     if (file.Length > 0)
                     {
                         var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
+                        Console.WriteLine("filename");
+                        Console.WriteLine(fileName);
+
                         var filesInFolder = Directory.GetFiles(_path);
                         filesInFolder = filesInFolder
                             .Select(x => x.Split('\\').Last()).ToArray();
+                        Console.WriteLine("files in folder");
+                        foreach (var fileNameItem in filesInFolder)
+                        {
+                            Console.WriteLine(fileNameItem);
+                        }
+                        Console.WriteLine("combined path");
+                        Console.WriteLine(Path.Combine(_path, fileName));
                         if (!filesInFolder.Contains(fileName))
                             file.SaveAs(Path.Combine(_path, fileName));
                         else
