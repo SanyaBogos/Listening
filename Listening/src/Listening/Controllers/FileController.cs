@@ -17,8 +17,7 @@ namespace WebListening.Controllers
     [Route("api/[controller]")]
     public class FileController : Controller
     {
-        // TODO: remove hardcoded path to config json and set it up in ConfigureService method
-        private string _path; //= @"Audio\";
+        private string _path;
 
         private readonly IConfiguration _configuration;
 
@@ -46,21 +45,9 @@ namespace WebListening.Controllers
                     if (file.Length > 0)
                     {
                         var fileName = ContentDispositionHeaderValue.Parse(file.ContentDisposition).FileName.Trim('"');
-                        Console.WriteLine("filename");
-                        Console.WriteLine(fileName);
-                        Console.WriteLine("_path");
-                        Console.WriteLine(_path);
-
                         var filesInFolder = Directory.GetFiles(_path);
                         filesInFolder = filesInFolder
-                            .Select(x => x.Split('\\').Last()).ToArray();
-                        Console.WriteLine("files in folder");
-                        foreach (var fileNameItem in filesInFolder)
-                        {
-                            Console.WriteLine(fileNameItem);
-                        }
-                        Console.WriteLine("combined path");
-                        Console.WriteLine(Path.Combine(_path, fileName));
+                            .Select(x => x.Split('/').Last()).ToArray();
                         if (!filesInFolder.Contains(fileName))
                             file.SaveAs(Path.Combine(_path, fileName));
                         else
@@ -73,15 +60,11 @@ namespace WebListening.Controllers
             }
             catch (FileUploadException ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json(ex.Message);
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
-                Console.WriteLine(ex.StackTrace);
                 Response.StatusCode = (int)HttpStatusCode.BadRequest;
                 return Json("Invalid operation");
             }
