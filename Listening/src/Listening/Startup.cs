@@ -15,6 +15,9 @@ using WebListening.Models;
 using WebListening.Repositories;
 using WebListening.Services;
 using AutoMapper;
+using System.IO;
+using System.Security.Cryptography.X509Certificates;
+using Microsoft.AspNet.Server.Kestrel.Https;
 
 namespace WebListening
 {
@@ -116,6 +119,14 @@ namespace WebListening
             app.UseStaticFiles();
 
             app.UseIdentity();
+            
+            var pfxFile = Path.Combine(Directory.GetCurrentDirectory(), "cert.pem");
+            Console.WriteLine("\n\n\n\nCurrent dir\n\n\n\n");
+            Console.WriteLine(Directory.GetCurrentDirectory());
+            X509Certificate2 certificate = new X509Certificate2(pfxFile, "Password");
+            app.Use(ChangeContextToHttps);
+            app.UseKestrelHttps(certificate);
+
 
             // To configure external authentication please see http://go.microsoft.com/fwlink/?LinkID=532715
 
@@ -131,5 +142,14 @@ namespace WebListening
 
         // Entry point for the application.
         public static void Main(string[] args) => WebApplication.Run<Startup>(args);
+
+        private static RequestDelegate ChangeContextToHttps(RequestDelegate next)
+        {
+            return async context =>
+            {
+                context.Request.Scheme = "https";
+                await next(context);
+            };
+        }
     }
 }
