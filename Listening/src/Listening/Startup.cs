@@ -120,9 +120,10 @@ namespace WebListening
 
             app.UseIdentity();
             
-            var pfxFile = Path.Combine(Directory.GetCurrentDirectory(), "cert.pem");
+            var pfxFile = Path.Combine(Directory.GetCurrentDirectory(), "cert.pfx");
             Console.WriteLine("\n\n\n\nCurrent dir\n\n\n\n");
             Console.WriteLine(Directory.GetCurrentDirectory());
+            Console.WriteLine(pfxFile);
             X509Certificate2 certificate = new X509Certificate2(pfxFile, "Password");
             app.Use(ChangeContextToHttps);
             app.UseKestrelHttps(certificate);
