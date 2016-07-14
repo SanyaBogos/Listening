@@ -124,7 +124,7 @@ namespace WebListening
             Console.WriteLine("\n\n\n\nCurrent dir\n\n\n\n");
             Console.WriteLine(Directory.GetCurrentDirectory());
             Console.WriteLine(pfxFile);
-            X509Certificate2 certificate = new X509Certificate2(pfxFile, "Password");
+            X509Certificate2 certificate = new X509Certificate2(pfxFile, "qwerty");
             app.Use(ChangeContextToHttps);
             app.UseKestrelHttps(certificate);
 
